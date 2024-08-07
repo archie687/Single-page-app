@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faApple, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { useNavigate } from 'react-router-dom';
+// import axios from 'axios';
+import { error } from "console";
 
 
 
@@ -17,15 +19,36 @@ type FormValue = {
 
 const LoginForm = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm<FormValue>()
-    const [data, setData] = useState({ email: '', password: '' })
+    // const [data, setData] = useState({ email: '', password: '' })
     const navigate = useNavigate();
 
-    const onSubmit: SubmitHandler<FormValue> = (data) => {
+    const onSubmit: SubmitHandler<FormValue> = async(data) => {
         console.log("final-data", data);
         alert(data.username);
         localStorage.setItem('username', data.username);
         navigate('/home');
-    }
+        
+        try {
+             
+            const requestBody = JSON.stringify(data); 
+        
+            const response = await fetch('testurl.com/login', {
+              method: 'POST',
+              body: requestBody,
+              headers: { 'Content-Type': 'application/json' },
+            });
+            
+            const jsonData = await response.json();
+            console.log('API response:', jsonData);
+          
+          }
+
+          
+          catch (error) {
+              console.error('Error:', error);
+          }
+        
+    };
 
     return (
         <div className="bg-color">
