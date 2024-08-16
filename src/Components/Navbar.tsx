@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faUserTie } from '@fortawesome/free-solid-svg-icons';
 
@@ -25,18 +25,30 @@ const Navbar = () => {
   return (
     <nav className='navbar'>
       <ul>
-
         <li>
-          <Link to="/home">Home</Link>
+          <NavLink 
+            to="/home" 
+            className={({ isActive }: { isActive: boolean }) => (isActive ? 'active-link' : '')}
+          >
+            Home
+          </NavLink>
         </li>
-
         <li>
-          <Link to="/about">About</Link>
+          <NavLink 
+            to="/about" 
+            className={({ isActive }: { isActive: boolean }) => (isActive ? 'active-link' : '')}
+          >
+            About
+          </NavLink>
         </li>
         <li>
-          <Link to="/contact">Contact</Link>
+          <NavLink 
+            to="/contact" 
+            className={({ isActive }: { isActive: boolean }) => (isActive ? 'active-link' : '')}
+          >
+            Contact
+          </NavLink>
         </li>
-
       </ul>
 
       <div className="user-info">

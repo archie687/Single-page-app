@@ -376,3 +376,8 @@ a{
 .contact-left{
   width: 20%;
 }
+
+.active-link {
+  color: rgb(170, 22, 187); /* Change this to whatever color you want */
+  font-weight: bold; /* Optional: to make it stand out more */
+}
