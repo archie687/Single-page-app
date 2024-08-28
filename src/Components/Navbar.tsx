@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faUserTie } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
+  const userInfoRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const [username, setUsername] = useState<string | null>(null);
   const [showUserInfo, setShowUserInfo] = useState(false);
@@ -12,6 +13,17 @@ const Navbar = () => {
     if (storedUsername) {
       setUsername(storedUsername);
     }
+    
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userInfoRef.current && !userInfoRef.current.contains(event.target as Node)) {
+        setShowUserInfo(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   const handleIconClick = () => {
@@ -53,7 +65,7 @@ const Navbar = () => {
 
       <div className="user-info">
         <FontAwesomeIcon icon={faUser} onClick={handleIconClick} className="cursor-pointer" />
-        <div className={`user-div ${showUserInfo ? 'visible' : ''}`}>
+        <div  ref={userInfoRef} className={`user-div ${showUserInfo ? 'visible' : ''}`}>
           <div className="top">
          
             {showUserInfo && username && <p className='user-name'>Welcome, {username}!</p>}
